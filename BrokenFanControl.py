@@ -16,14 +16,14 @@ def getload():
   uptime_output = subprocess.check_output("uptime", shell=True, stderr=subprocess.PIPE).split()
   pos = uptime_output.index('averages:')
   # pos+1 = load in last min, pos+2 = last 5, pos+3 = last 15
-  return float(uptime_output[pos+2])
+  return float(uptime_output[pos+1])
 def fanspeed_based_on_load():
   load = getload()
-  # scale from 2000 rpm -> 6000 rpm based on load  0 -> 20
-  scale = load / 20.0 # from 0 -> 1
+  # scale from 1800 rpm -> 6000 rpm based on load  0 -> 20
+  scale = load / 7.0 # from 0 -> 1
   if scale > 1:
     scale = 1.0
-  fanspeed = int(((6000-2000) * scale) + 2000)
+  fanspeed = int(((6000-1800) * scale) + 1800)
   return fanspeed
 
 fanspeed = fanspeed_based_on_load()
